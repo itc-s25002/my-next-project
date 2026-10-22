@@ -1,69 +1,99 @@
-import Image from "next/image";
 import styles from "./page.module.css";
+import Image from "next/image";
+
+import ButtonLink from "./_components/ButtonLink";
+import { News } from "@/app/_libs/microcms";
+
+const data: {
+  contents: News[];
+} = {
+  contents: [
+    {
+      id: "1",
+      title: "渋谷にオフィスを移転しました",
+      category: {
+        name: "更新情報",
+      },
+      publishedAt: "2023/05/19",
+      createdAt: "2023/05/19",
+    },
+    {
+      id: "2",
+      title: "当社CEO",
+      category: {
+        name: "更新情報",
+      },
+      publishedAt: "2023/05/19",
+      createdAt: "2023/05/19",
+    },
+    {
+      id: "3",
+      title: "テストの時期です",
+      category: {
+        name: "更新情報",
+      },
+      publishedAt: "2023/04/19",
+      createdAt: "2023/04/19",
+    },
+  ],
+};
 
 export default function Home() {
+  const sliceData = data.contents.slice(0, 2);
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <section className={styles.top}>
+        <div>
+          <h1 className={styles.title}>テクノロジーで世界を変える</h1>
+          <p className={styles.description}>
+            私達は市場をリードしているグローバルテックカンパニーです。
           </p>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <Image
+          className={styles.bgimg}
+          src="/img-mv.jpg"
+          alt=""
+          width={4000}
+          height={1200}
+        />
+      </section>
+      <section className={styles.news}>
+        <h2 className={styles.newsTitle}>お知らせ</h2>
+        <ul>
+          {sliceData.map((article) => (
+            <li key={article.id} className={styles.list}>
+              <div className={styles.link}>
+                <Image
+                  className={styles.image}
+                  src="/no-image.png"
+                  alt="No Image"
+                  width={1200}
+                  height={630}
+                />
+                <dl className={styles.contents}>
+                  <dt className={styles.newsItemTitle}>{article.title}</dt>
+                  <dd className={styles.meta}>
+                    <span className={styles.tag}>{article.category.name}</span>
+                    <span className={styles.date}>
+                      <Image
+                        src="/clock.svg"
+                        alt=""
+                        width={16}
+                        height={16}
+                        priority
+                      />
+                      {article.publishedAt}
+                    </span>
+                  </dd>
+                </dl>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className={styles.newsLink}>
+          <ButtonLink href="/news">もっと見る</ButtonLink>
         </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }
