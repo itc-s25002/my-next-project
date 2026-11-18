@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getNewsDetail } from "@/app/_libs/microcms";
 import { notFound } from "next/navigation";
 import Article from "@/app/_components/Article";
@@ -12,6 +13,26 @@ type Props = {
     dk?: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getNewsDetail(slug, {
+    draftKey: (await searchParams).dk,
+  });
+
+  return {
+    title: data.title,
+    description: data.description,
+    openGraph: {
+      title: data.title,
+      description: data.description,
+      images: [data?.thumbnail?.url ?? ""],
+    },
+  };
+}
 
 export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;

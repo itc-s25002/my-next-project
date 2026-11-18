@@ -3,6 +3,10 @@ import { getMembersList } from "../_libs/microcms";
 import styles from "./page.module.css";
 import { MEMBERS_LIST_LIMIT } from "../_constants";
 
+export const metadata = {
+  title: "メンバー",
+};
+
 export default async function Page() {
   const data = await getMembersList({ limit: MEMBERS_LIST_LIMIT });
   return (
